@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nad's Website</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #000014;
+      color: #00FFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #001833;
+      width: 100vw;
+      padding: 60px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 255, 255, 0.7);
+      position: relative;
+      overflow: hidden;
+      min-width: 100%;
+    }
+    header h1 {
+      font-weight: 900;
+      font-size: 3.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #00FFFF;
+      position: relative;
+      z-index: 2;
+      -webkit-text-stroke: 2px #0a1e3a; 
+  text-shadow:
+    0 0 10px #00ffff,
+    0 0 20px #00ffff,
+    0 0 30px #00ffff;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .stars span {
+      position: absolute;
+      background: #0ff;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle 3s infinite ease-in-out;
+      box-shadow: 0 0 6px 2px #0ff;
+    }
+    .stars span.small { width: 2px; height: 2px; animation-duration: 2s; }
+    .stars span.medium { width: 3px; height: 3px; animation-duration: 3s; }
+    .stars span.large { width: 4px; height: 4px; animation-duration: 4s; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    nav {
+      width: 100vw;
+      background: #002244;
+      box-shadow: 0 0 20px #00FFFF;
+      padding: 0 10px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      border-radius: 0 0 12px 12px;
+    }
+    nav .nav-inner {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+    }
+    .nav-link a {
+      display: inline-block;
+      padding: 18px 24px;
+      color: #a0ffff;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: color 0.3s, font-weight 0.3s, transform 0.3s;
+    }
+    .nav-link a:hover {
+      color: #00FFFF;
+      font-weight: 800;
+      transform: scale(1.1);
+    }
+
+    .welcome-box {
+      max-width: 900px;
+      margin: 0 auto 20px auto;
+      background-color: rgba(0, 255, 255, 0.1);
+      color: #00FFFF;
+      padding: 15px 25px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 15px #00FFFF;
+      user-select: none;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #001e2f;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .step {
+      padding: 18px 22px;
+      border-left: 5px solid #00ffff;
+      margin: 20px 0;
+      background-color: rgba(0, 255, 255, 0.07);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .step:hover {
+      transform: translateX(5px);
+      background-color: rgba(0, 255, 255, 0.12);
+    }
+    .step h3 {
+      margin: 0;
+      color: #00ffff;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .step p {
+      margin-top: 6px;
+      color: #b2ffff;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 28px;
+      color: #00ffff88;
+      margin: -10px 0;
+    }
+
+    .slideshow-container {
+      height: 300px; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #001e2f;
+      position: relative;
+    }
+    .slides {
+      display: none;
+      width: 100%;
+      border-radius: 12px;
+      user-select: none;
+    }
+    .slides.fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    @keyframes fade {
+      from {opacity: 0.4}
+      to {opacity: 1}
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 8px 16px;
+      transform: translateY(-50%);
+      color: #00ffff;
+      font-weight: bold;
+      font-size: 22px;
+      border-radius: 0 12px 12px 0;
+      user-select: none;
+      background-color: rgba(0,255,255,0.15);
+      transition: background-color 0.3s ease;
+    }
+    .next {
+      right: 0;
+      border-radius: 12px 0 0 12px;
+    }
+    .prev { left: 0; 
+    }
+    .prev:hover, .next:hover {
+      background-color: rgba(0,255,255,0.5);
+    }
+
+    .center-img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer {
+      background-color: #001020;
+      color: #00FFFF;
+      width: 100vw;
+      padding: 20px 10px;
+      box-shadow: 0 -3px 12px rgba(0, 255, 255, 0.6);
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      margin-top: 60px;
+    }
+    footer .footer-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    footer h2 {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: #00FFFF;
+      letter-spacing: 1px;
+    }
+    #datetime.datetime-display {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #00FFFF;
+      background: rgba(0, 255, 255, 0.1);
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 6px;
+      box-shadow: none;
+      transition: box-shadow 0.3s ease;
+      cursor: default;
+      user-select: text;
+      letter-spacing: 0.3px;
+      min-width: 220px;
+    }
+    footer p {
+      margin: 6px 0 0 0;
+      font-size: 0.9rem;
+      color: #33ffffcc;
+      letter-spacing: 0.3px;
+    }
+
+    .game-link {
+      color: cyan;
+      font-weight: bold;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+    .game-link:hover {
+      transform: scale(1.1);
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background-color: #001e2f;
+      color: #00ffff;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      padding: 25px 30px;
+      box-shadow: 0 0 30px #00ffffaa;
+      position: relative;
+      overflow-y: auto;
+      height: 80vh; 
+      max-height: 80vh; 
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .modal-content h2 {
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .modal-content p {
+      color: #66ffff;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+    .modal-content img {
+       width: 100%;
+       height: 300px; 
+       object-fit: cover; 
+       border-radius: 8px;
+       display: block;
+       margin-top: 10px;
+       box-shadow: 0 0 15px #00ffffbb;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: 900;
+      color: #00ffff;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    .close-btn:hover {
+      color: #66ffff;
+    }
+
+    nav .nav-inner {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+      <div class="stars">
+        <span class="small" style="top:10%; left:15%; animation-delay: 0s;"></span>
+        <span class="medium" style="top:25%; left:40%; animation-delay: 1s;"></span>
+        <span class="small" style="top:45%; left:70%; animation-delay: 2s;"></span>
+        <span class="large" style="top:60%; left:20%; animation-delay: 0.5s;"></span>
+        <span class="medium" style="top:75%; left:85%; animation-delay: 1.5s;"></span>
+        <span class="small" style="top:15%; left:80%; animation-delay: 2.5s;"></span>
+        <span class="large" style="top:35%; left:55%; animation-delay: 1.2s;"></span>
+        <span class="medium" style="top:50%; left:30%; animation-delay: 0.8s;"></span>
+        <span class="small" style="top:80%; left:10%; animation-delay: 1.7s;"></span>
+        <span class="large" style="top:85%; left:65%; animation-delay: 2.2s;"></span>
+      </div>
+      <h1>NAD'S PERSONAL WEBSITE</h1>
+  </header>
+
+    <nav>
+      <div class="nav-inner">
+        <div class="nav-link"><a href="index.html">ABOUT ME</a></div>
+        <div class="nav-link"><a href="experience.html">EXPERIENCE</a></div>
+        <div class="nav-link"><a href="education.html">EDUCATION</a></div>
+        <div class="nav-link"><a href="family.html">FAMILY</a></div>
+        <div class="nav-link"><a href="friends.html">FRIENDS</a></div>
+        <div class="nav-link"><a href="gallery.html">GALLERY</a></div>
+      </div>
+    </nav>
+
+    <div class="welcome-box"> &#128142; EDUCATION BACKGROUND &#128142; </div>
+    <br>
+
+    <div class="container">
+      <div class="step" data-modal="modal-tadika">
+        <h3>🎒 Kindergarten</h3>
+        <p> At Ipoh (Age 4–6)</p>
+      </div>
+
+      <div class="arrow">▼</div>
+
+      <div class="step" data-modal="modal-sk">
+        <h3>📘 Primary School</h3>
+        <p> At Ipoh, Subang & Kuantan (Age 7–12)</p>
+      </div>
+
+      <div class="arrow">▼</div>
+
+      <div class="step" data-modal="modal-smk">
+        <h3>📚 Secondary School</h3>
+        <p> At Kuantan & Jeli (Age 13–17)</p>
+      </div>
+
+      <div class="arrow">▼</div>
+
+      <div class="step" data-modal="modal-preuni">
+        <h3>🧪 Pre-Diploma Commerce</h3>
+        <p> At UiTM Machang - 1 Semester </p>
+      </div>
+
+      <div class="arrow">▼</div>
+
+      <div class="step" data-modal="modal-diploma">
+        <h3>🎓 Diploma</h3>
+        <p>At UiTM Machang - 5 Semester (2023 - 2025)</p>
+      </div>
+    </div>
+
+    <div id="modal-tadika" class="modal" onclick="closeModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal(event)">&times;</span>
+        <h2>🎒 Kindergarten</h2>
+        <br>
+        <p> Tadika Al-Huda </p>
+        <img src="education/tadika.jpg" alt="Gambar Tadika" class="center-img" /> 
+      </div>
+    </div>
+
+    <div id="modal-sk" class="modal" onclick="closeModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal(event)">&times;</span>
+        <h2>📘 Primary School</h2>
+        <p>1. SK Jalan Pegoh (7 years old) </p>
+       <img src="education/1234.jpg" alt="SKJP" />
+       <br>
+        <p> 2. SK TUDM Subang (8 - 9 years old) </p>
+       <img src="education/1212.jpg" alt="TUDM SUBANG" />
+       <br>
+        <p> 3. SK Pengkalan Tentera (9 - 12 years old) </p>
+       <section class="slideshow-container">
+          <img class="slides fade" src="education/1231.jpg" alt="skpt" />
+          <img class="slides fade" src="education/skpt 1.jpg" alt="skpt" />
+          <img class="slides fade" src="education/skpt 2.jpg" alt="skpt" />
+          <img class="slides fade" src="education/skpt 3.jpg" alt="skpt" />
+          <img class="slides fade" src="education/skpt 4.jpg" alt="skpt" />
+
+          <a class="prev" onclick="plusSlides(-1, 'modal-sk')">&#10094;</a>
+          <a class="next" onclick="plusSlides(1, 'modal-sk')">&#10095;</a>
+        </section>
+      </div>
+    </div>
+
+    <div id="modal-smk" class="modal" onclick="closeModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal(event)">&times;</span>
+        <h2>📚 Secondary School </h2>
+        <p> 1. SMK Seri Mahkota (13 years old) </p>
+       <img src="education/2323.jpg" alt="SMKSM" />
+       <br>
+        <p> 2. SMK Ayer Lanas (14 - 17 years old</p>
+        <section class="slideshow-container">
+          <img class="slides fade" src="education/4321.jpg" alt="SMK image 1" />
+          <img class="slides fade" src="education/smkal 1.jpg" alt="SMK image 2" />
+          <img class="slides fade" src="education/smkal 2.jpg" alt="SMK image 3" />
+          <img class="slides fade" src="education/smkal 3.jpg" alt="SMK image 4" />
+          <img class="slides fade" src="education/smkal 4.jpg" alt="SMK image 5" />
+
+          <a class="prev" onclick="plusSlides(-1, 'modal-smk')">&#10094;</a>
+          <a class="next" onclick="plusSlides(1, 'modal-smk')">&#10095;</a>
+        </section>
+      </div>
+    </div>
+
+    <div id="modal-preuni" class="modal" onclick="closeModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal(event)">&times;</span>
+        <h2>🧪 Pre-Diploma Commerce</h2>
+        <br>
+        <section class="slideshow-container">
+          <img class="slides fade" src="education/123.jpg" alt="UITM MACHANG" />
+          <img class="slides fade" src="education/pra 5.jpg" alt="UITM MACHANG 1" />
+          <img class="slides fade" src="education/pra 4.jpg" alt="UITM MACHANG 2" />
+          <img class="slides fade" src="education/pra 3.jpg" alt="UITM MACHANG 3" />
+          <img class="slides fade" src="education/pra 2.jpg" alt="UITM MACHANG 4" />
+          <img class="slides fade" src="education/pra 1.jpg" alt="UITM MACHANG 5" />
+          <a class="prev" onclick="plusSlides(-1, 'modal-preuni')">&#10094;</a>
+          <a class="next" onclick="plusSlides(1, 'modal-preuni')">&#10095;</a>
+        </section>
+      </div>
+    </div>
+
+    <div id="modal-diploma" class="modal" onclick="closeModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal(event)">&times;</span>
+        <h2>🎓 Diploma</h2>
+        <p>Diploma in Information Management</p>
+        <section class="slideshow-container">
+          <img class="slides fade" src="education/123.jpg" alt="diploma" />
+          <img class="slides fade" src="education/dip5.jpg" alt="diploma1" />
+          <img class="slides fade" src="education/dip1.jpg" alt="diploma2" />
+          <img class="slides fade" src="education/dip2.jpg" alt="diploma3" />
+          <img class="slides fade" src="education/dip3.jpg" alt="diploma4" />
+          <img class="slides fade" src="education/dip4.jpg" alt="diploma5" />
+          <img class="slides fade" src="education/dip6.jpg" alt="diploma6" />
+          <img class="slides fade" src="education/dip7.jpg" alt="diploma7" />
+          <img class="slides fade" src="education/dip8.jpg" alt="diploma8" />
+          <img class="slides fade" src="education/dip9.jpg" alt="diploma9" />
+          <img class="slides fade" src="education/dip10.jpg" alt="diploma10" />
+
+          <a class="prev" onclick="plusSlides(-1, 'modal-diploma')">&#10094;</a>
+          <a class="next" onclick="plusSlides(1, 'modal-diploma')">&#10095;</a>
+        </section>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-content">
+        <div class="get-in-touch" style="font-weight: bold; margin-bottom: 8px;">
+          GET IN TOUCH
+        </div>
+        <div id="datetime" class="datetime-display"
+          onmouseover="this.style.boxShadow='0 0 8px 3px rgba(0, 255, 255, 0.7)';"
+          onmouseout="this.style.boxShadow='none';"
+        ></div>
+        <br>
+        <p>
+          <a href="https://playtictactoe.org/" target="_blank" rel="noopener noreferrer" class="game-link">
+            Feel bored? Click and play the game.
+          </a>
+        </p>
+        <p>&copy;2025 by ctnadhirah. All rights reserved. For educational purpose.</p>
+      </div>
+
+    <!-- Script untuk tarikh dan masa -->
+    <script>
+      function updateDateTime() {
+        const now = new Date();
+        const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+        const weekday = weekdays[now.getDay()];
+
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const formattedDate = `${day} ${month} ${year} (${weekday})`;
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+        document.getElementById("datetime").innerHTML =
+          `📅 ${formattedDate} &nbsp;&nbsp; 🕒 ${formattedTime}`;
+      }
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+    </script>
+
+    <script>
+      // Open modal when step clicked
+      document.querySelectorAll('.step').forEach(step => {
+        step.addEventListener('click', () => {
+          const modalId = step.getAttribute('data-modal');
+          if (modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+              modal.style.display = 'flex';
+              document.body.style.overflow = 'hidden'; // prevent scroll behind modal
+              showSlides(1, modalId); // reset slideshow on open
+            }
+          }
+        });
+      });
+      // Close modal on clicking close button or outside modal-content
+      function closeModal(event) {
+        if (event) event.stopPropagation();
+        const modal = event.target.closest('.modal') || event.target.parentElement.closest('.modal');
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = ''; // restore scroll
+        }
+      }
+      // Slideshow logic
+      const slideIndices = {};
+      function showSlides(n, modalId) {
+        const slides = document.querySelectorAll(`#${modalId} .slides`);
+        if (slides.length === 0) return;
+
+        if (!slideIndices[modalId]) {
+          slideIndices[modalId] = 1;
+        }
+
+        if (n > slides.length) {
+          slideIndices[modalId] = 1;
+        }
+        if (n < 1) {
+          slideIndices[modalId] = slides.length;
+        }
+
+        slides.forEach(slide => (slide.style.display = 'none'));
+        slides[slideIndices[modalId] - 1].style.display = 'block';
+      }
+
+      function plusSlides(n, modalId) {
+        if (!slideIndices[modalId]) {
+          slideIndices[modalId] = 1;
+        }
+        showSlides((slideIndices[modalId] += n), modalId);
+      }
+    </script>
+
+</body>
+</html>
